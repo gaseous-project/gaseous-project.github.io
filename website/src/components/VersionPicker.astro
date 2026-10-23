@@ -1,0 +1,47 @@
+---
+import Default from "@astrojs/starlight/components/SiteTitle.astro";
+
+// Use native Astro URL parsing which is always defined
+const pathname = Astro.url.pathname;
+
+// Detect active state to highlight the correct option item
+const currentVersion = pathname.includes('/v1/') ? 'v1' : 'v2';
+---
+
+<div class="version-picker-container">
+  <!-- Render the default theme site title / logo -->
+  <Default {...Astro.props}>
+    <slot />
+  </Default>
+  
+  <!-- Add our custom select dropdown box -->
+  <select class="version-select" onchange="window.location.href = this.value">
+    <option value="/v2/" selected={currentVersion === 'v2'}>v2 (Latest)</option>
+    <option value="/v1/" selected={currentVersion === 'v1'}>v1.0</option>
+  </select>
+</div>
+
+<style>
+  :host, .version-picker-container {
+    display: inline-flex !important;
+    align-items: center;
+    gap: 0.75rem;
+    z-index: 10;
+  }
+  
+  .version-select {
+    background-color: var(--sl-color-bg-nav);
+    color: var(--sl-color-text);
+    border: 1px solid var(--sl-color-hairline);
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    font-size: var(--sl-text-sm);
+    font-weight: 500;
+    cursor: pointer;
+    outline: none;
+  }
+
+  .version-select:focus {
+    border-color: var(--sl-color-text-accent);
+  }
+</style>
