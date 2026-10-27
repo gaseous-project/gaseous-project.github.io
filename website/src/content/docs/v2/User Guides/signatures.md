@@ -4,7 +4,7 @@ sidebar:
   # This sets the text for THIS specific page link inside the section
   label: Signatures
   # This forces the overview link to be the very first item under the heading
-  order: 3
+  order: 2
 ---
 
 Signatures are used to match a ROM to a game name using the hash of the ROM (MD5 or SHA1). Without access to a signature database, Gaseous will attempt to "guess" the game name from the file name.
