@@ -50,7 +50,7 @@ If there are other DAT's you'd like to see support for, please raise an issue wi
 > * Click "Try it out"
 > * Enter the id of the first source to delete and click "Execute"
 > * Repeat for each id to delete
-> * Once complete, follow the instructions above (https://github.com/gaseous-project/gaseous-server/wiki/Signatures#adding-signature-dat-files-to-the-local-database) to re-import the DATs.
+> * Once complete, follow the instructions above ([](/v1/user-guides/signatures#adding-signature-dat-files-to-the-local-database)) to re-import the DATs.
 
 ### No-Intro
 1. Go to https://datomatic.no-intro.org/index.php?page=download&s=64&op=daily

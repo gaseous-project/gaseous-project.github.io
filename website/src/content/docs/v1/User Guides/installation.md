@@ -7,7 +7,7 @@ sidebar:
 
 ## Prerequisites for all deployment types
 
-* An IGDB API key. See https://github.com/gaseous-project/gaseous-server/wiki/Metadata for instructions on creating an API key.
+* An IGDB API key. See [](/v1/user-guides/metadata#igdb) for instructions on creating an API key.
 
 ## Installation
 
@@ -62,7 +62,7 @@ volumes:
   gs:
   gsdb:
 ```
-5. Edit the environment variables igdbclientid and igdbclientsecret to the values retrieved from your IGDB account (see: https://github.com/gaseous-project/gaseous-server/wiki/Metadata for details on creating your IGDB key). Other environment variables that can be configured can be found here: https://github.com/gaseous-project/gaseous-server/wiki/Configuration-File
+5. Edit the environment variables igdbclientid and igdbclientsecret to the values retrieved from your IGDB account (see: [](/v1/user-guides/metadata) for details on creating your IGDB key). Other environment variables that can be configured can be found here: [](/v1/documentation/configuration-file)
 6. Save and close the file
 7. Run the command ```docker-compose up -d```
 8. Connect to the host on port 5198
@@ -102,7 +102,7 @@ volumes:
   gs:
   gsdb:
 ```
-5. Edit the environment variables igdbclientid and igdbclientsecret to the values retrieved from your IGDB account (see: https://github.com/gaseous-project/gaseous-server/wiki/Metadata for details on creating your IGDB key). Other environment variables that can be configured can be found here: https://github.com/gaseous-project/gaseous-server/wiki/Configuration-File
+5. Edit the environment variables igdbclientid and igdbclientsecret to the values retrieved from your IGDB account (see: [](/v1/user-guides/metadata) for details on creating your IGDB key). Other environment variables that can be configured can be found here: [](/v1/documentation/configuration-file)
 6. Save and close the file
 7. Run the command ```docker-compose up -d```
 8. Connect to the host on port 5198
@@ -123,7 +123,7 @@ volumes:
 8. Create a directory in the home directory of the user that will run the server. For example, if running as the user ```gaseous```, create the directory ```/home/gaseous/.gaseous-server```
 9. Change into the ```.gaseous-server``` directory created in the previous step
 10. Copy the JSON from the config file above into a new file named ```config.json```
-11. Update the database section with the database server hostname, username, password, and port. A full description of the configuration options can be found here: https://github.com/gaseous-project/gaseous-server/wiki/Configuration-File
+11. Update the database section with the database server hostname, username, password, and port. A full description of the configuration options can be found here: [](/v1/documentation/configuration-file)
 12. Compile the server by changing back to the repo cloned earlier and executing:
     * ```dotnet restore "gaseous-server/gaseous-server.csproj"```
     * ```dotnet publish "gaseous-server/gaseous-server.csproj" --use-current-runtime --self-contained false -c Release -o <output directory>```

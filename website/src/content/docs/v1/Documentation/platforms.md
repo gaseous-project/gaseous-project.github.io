@@ -44,4 +44,4 @@ The built in emulator supports the following platforms:
 * Turbografx-16/PC Engine CD
 * Virtual Boy
 
-*Note:* Some of the above systems require a BIOS/firmware file in order to execute. To provide your own BIOS files, please read https://github.com/gaseous-project/gaseous-server/wiki/BIOS-System-Firmware
+*Note:* Some of the above systems require a BIOS/firmware file in order to execute. To provide your own BIOS files, please read [](/v1/documentation/bios-system-firmware)

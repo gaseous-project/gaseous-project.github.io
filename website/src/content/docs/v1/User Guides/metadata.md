@@ -11,7 +11,7 @@ Metadata provides cover art, screenshots, etc for your ROMs.
 
 Metadata is currently only supplied by IGDB, but more will be added in the future.
 
-See https://github.com/gaseous-project/gaseous-server/wiki/ROM-Metadata-Matching for information how a ROM is matched to metadata.
+See [](/v1/technical/rom-metadata-matching) for information how a ROM is matched to metadata.
 
 # IGDB
 1. Sign Up with Twitch for a free account

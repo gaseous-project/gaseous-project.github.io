@@ -5,9 +5,9 @@ title: ROM Metadata Matching
 Image to game matching follows the following order of operations, stopping the process at the first match:
 ### Get the file signature
 1. Collect the MD5 and SHA1 hashes for the ROM to be processed
-2. Check the local database for a match (see: https://github.com/gaseous-project/gaseous-server/wiki/Signatures#local-signatures)
-3. If enabled; check the configured alternative signature source (see: https://github.com/gaseous-project/gaseous-server/wiki/Signatures#other-signature-sources)
-  * The [Hasheous](https://github.com/gaseous-project/gaseous-server/wiki/Signatures#hasheous) signature provider is capable of responding with a metadata match. If so, the matching process ends here and the value from Hasheous is used.
+2. Check the local database for a match (see: [](/v1/user-guides/signatures#local-signatures))
+3. If enabled; check the configured alternative signature source (see: [](/v1/user-guides/signatures#other-signature-sources))
+  > The [Hasheous](/v1/user-guides/signatures#hasheous) signature provider is capable of responding with a metadata match. If so, the matching process ends here and the value from Hasheous is used.
 4. Attempt to parse the file name - clues such as the extension being used to define which platform the file belongs to are used to create a search criteria
 
 **Note:** Sometimes the hash can not be matched as a highscore table for example was saved to the image

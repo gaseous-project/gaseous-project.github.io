@@ -67,6 +67,7 @@ function remarkStarlightAutoTitles() {
 
 			if (href.startsWith('/') && isLinkEmpty) {
 				const hrefWithoutHash = href.split('#')[0]; // Extract path before the '#'
+				const hrefHash = href.includes('#') ? href.split('#')[1] : '';
 				const hrefClean = hrefWithoutHash.split('?')[0]; // Extract path before the '?'
 
 				let cleanSlug = hrefClean.replace(/^\/|\/$/g, '');
@@ -101,7 +102,11 @@ function remarkStarlightAutoTitles() {
 						const { data } = matter(fileContent);
 
 						if (data && data.title) {
-							linkNode.children = [{ type: 'text', value: String(data.title) }];
+							if (hrefHash) {
+								linkNode.children = [{ type: 'text', value: String(data.title) + '#' + hrefHash }];
+							} else {
+								linkNode.children = [{ type: 'text', value: String(data.title) }];
+							}
 							console.log(`[AutoTitle] Successfully resolved title "${data.title}" for href: "${href}"`);
 						}
 					} catch (err) {
