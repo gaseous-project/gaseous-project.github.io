@@ -18,7 +18,6 @@ The listing is based on the default docker-compose configuration provided here: 
 | ----------- | ---- | ------- |
 | id.twitch.tv | 443 | IGDB Authentication |
 | api.igdb.com | 443 | Required to fetch metadata via the IGDB API |
-| hasheous.org | 443 | Hash lookup, and IGDB metadata proxy (coming in Gaseous 1.8) |
 
 ## Inter-Container
 

@@ -13,20 +13,6 @@ When Gaseous-Server is started for the first time, it creates a configuration fi
 | DatabaseName | dbname            | gaseous       |
 | Port      | dbport               | 3306          |
 
-### MetadataConfiguration
-| Attribute | Environment Variable | Possible Values | Default Value |
-| --------- | -------------------- | --------------- | ------------- |
-| DefaultMetadataSource | metadatasource  | IGDB<br />TheGamesDB<br />None            | IGDB          |
-| SignatureSource | signaturesource | LocalOnly<br />Hasheous     | LocalOnly     |
-| HasheousHost | hasheoushost |     | https://hasheous.org/ |
-
-#### Notes
-* DefaultMetadataSource is reserved for future use - currently only IGDB is available
-* SignatureSource governs where Gaseous will look for ROM hash signatures (typically from DATs):
-  * LocalOnly (default): sets Gaseous to only look in the local database for DATs. You will need to import the DATs yourself (see: [](/v1/user-guides/signatures/#local-signatures))
-  * Hasheous: sets Gaseous to also refer to the Hasheous service when attempting to match a signature (see: [](/v1/user-guides/signatures#hasheous), and the Hasheous project: https://github.com/gaseous-project/hasheous)
-* HasheousHost: sets the host that Gaseous will use for the Hasheous service (see: [](/v1/user-guides/signatures#hasheous))
-
 ### IGDBConfiguration
 | Attribute | Environment Variable |
 | --------- | -------------------- |
@@ -45,12 +31,6 @@ See [](/v1/user-guides/metadata#igdb) for information on configuring these attri
     "Password": "gaseous",
     "DatabaseName": "gaseous",
     "Port": 3306
-  },
-  "MetadataConfiguration": {
-    "MetadataSource": "IGDB",
-    "SignatureSource": "LocalOnly",
-    "MaxLibraryScanWorkers": 4,
-    "HasheousHost": "https://hasheous.org/"
   },
   "IGDBConfiguration": {
     "ClientId": "<clientid>",

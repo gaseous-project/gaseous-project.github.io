@@ -6,6 +6,9 @@ import { visit } from 'unist-util-visit';
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
+import { fromMarkdown } from 'mdast-util-from-markdown';
+import { toString } from 'mdast-util-to-string';
+import starlightLinksValidator from 'starlight-links-validator';
 
 /**
  * Helper to dynamically resolve a slugified URL path to the real, case-sensitive/spaced disk path
@@ -44,6 +47,51 @@ function resolveRealDiskPath(currentDir, segments) {
 }
 
 /**
+ * Find the heading text in a markdown file by its slug
+ * @param {string} fileContent 
+ * @param {string} targetHashSlug 
+ * @returns {string | null}
+ */
+function findHeadingTextBySlug(fileContent, targetHashSlug) {
+	try {
+		// Parse the markdown string into an MDAST (Markdown Abstract Syntax Tree)
+		const tree = fromMarkdown(fileContent);
+		let matchedHeadingText = null;
+
+		// Walk through the tree to find heading nodes
+		// (Using a lightweight custom check instead of full unist-util-visit to keep it fast)
+		/** @param {any} node */
+		const findHeading = (node) => {
+			if (node.type === 'heading') {
+				const headingText = toString(node);
+				// Replicate standard slugification (lowercase, replace non-alphanumeric/spaces with hyphens)
+				const generatedSlug = headingText
+					.toLowerCase()
+					.replace(/[^a-z0-9\s-]/g, '') // remove special characters
+					.replace(/\s+/g, '-');        // convert spaces to hyphens
+
+				if (generatedSlug === targetHashSlug) {
+					matchedHeadingText = headingText;
+					return true; // Stop searching
+				}
+			}
+			if (node.children) {
+				for (const child of node.children) {
+					if (findHeading(child)) return true;
+				}
+			}
+			return false;
+		};
+
+		findHeading(tree);
+		return matchedHeadingText;
+	} catch (e) {
+		console.error('[AutoTitle] Failed to extract heading text:', e);
+		return null;
+	}
+}
+
+/**
  * Robust Remark plugin to automatically fill empty markdown link brackets in Starlight
  * @returns {(tree: import('unist').Node) => void}
  */
@@ -59,16 +107,16 @@ function remarkStarlightAutoTitles() {
 			let isLinkEmpty = false;
 			if (!linkNode.children || linkNode.children.length === 0) {
 				isLinkEmpty = true;
-			} else if (linkNode.children.length === 1 && linkNode.children.type === 'text') {
-				if (!linkNode.children.value || String(linkNode.children.value).trim() === '') {
+			} else if (linkNode.children.length === 1 && linkNode.children[0].type === 'text') {
+				if (!linkNode.children[0].value || String(linkNode.children[0].value).trim() === '') {
 					isLinkEmpty = true;
 				}
 			}
 
 			if (href.startsWith('/') && isLinkEmpty) {
-				const hrefWithoutHash = href.split('#')[0]; // Extract path before the '#'
+				const hrefWithoutHash = href.split('#')[0];
 				const hrefHash = href.includes('#') ? href.split('#')[1] : '';
-				const hrefClean = hrefWithoutHash.split('?')[0]; // Extract path before the '?'
+				const hrefClean = hrefWithoutHash.split('?')[0];
 
 				let cleanSlug = hrefClean.replace(/^\/|\/$/g, '');
 
@@ -76,11 +124,8 @@ function remarkStarlightAutoTitles() {
 					cleanSlug = cleanSlug.replace(/^[a-z]{2}\//, '');
 				}
 
-				// Split the slug into separate directory pieces: ['v1', 'user-guides', 'signatures']
 				const slugSegments = cleanSlug.split('/');
 				const baseDocsDir = path.resolve('./src/content/docs/');
-
-				// Find the actual directory or base file path on your Mac
 				const resolvedDiskPath = resolveRealDiskPath(baseDocsDir, slugSegments);
 
 				let finalPath = null;
@@ -88,7 +133,6 @@ function remarkStarlightAutoTitles() {
 					if (fs.existsSync(resolvedDiskPath) && fs.statSync(resolvedDiskPath).isFile()) {
 						finalPath = resolvedDiskPath;
 					} else {
-						// If it matched a folder, check for index fallbacks inside it
 						const indexMd = path.join(resolvedDiskPath, 'index.md');
 						const indexMdx = path.join(resolvedDiskPath, 'index.mdx');
 						if (fs.existsSync(indexMd)) finalPath = indexMd;
@@ -102,12 +146,21 @@ function remarkStarlightAutoTitles() {
 						const { data } = matter(fileContent);
 
 						if (data && data.title) {
+							let displayTitle = String(data.title);
+
+							// If an anchor hash exists, find the explicit heading title
 							if (hrefHash) {
-								linkNode.children = [{ type: 'text', value: String(data.title) + '#' + hrefHash }];
-							} else {
-								linkNode.children = [{ type: 'text', value: String(data.title) }];
+								const headingText = findHeadingTextBySlug(fileContent, hrefHash);
+								if (headingText) {
+									displayTitle = `${displayTitle}: ${headingText}`;
+								} else {
+									// Fallback if heading layout couldn't be parsed perfectly
+									displayTitle = `${displayTitle} (#${hrefHash})`;
+								}
 							}
-							console.log(`[AutoTitle] Successfully resolved title "${data.title}" for href: "${href}"`);
+
+							linkNode.children = [{ type: 'text', value: displayTitle }];
+							console.log(`[AutoTitle] Successfully resolved title "${displayTitle}" for href: "${href}"`);
 						}
 					} catch (err) {
 						console.error(`[AutoTitle] Error reading frontmatter at: ${finalPath}`);
@@ -156,6 +209,9 @@ export default defineConfig({
 						{ autogenerate: { directory: 'v1' } }
 					],
 				}
+			],
+			plugins: [
+				starlightLinksValidator()
 			]
 		}),
 	],
