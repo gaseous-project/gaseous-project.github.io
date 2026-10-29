@@ -4,13 +4,13 @@ title: Background Services
 
 Gaseous runs a number of background services to keep things running smoothly:
 
-- **Metadata Refresh**: reloads the data from IGDB checking for new versions. For example; if the record in IGDB is updated with new cover art, or the summary changes, Gaseous learns about these changes when it's refreshed. It's a background task that shouldn't interfere with day to day running. It's set to run every 6 hours, but only updates those items that haven't been updated in the last 7 days. This is to prevent abusing the IGDB servers. No updating of matches is done with this process.
-- **Rematcher**: This process goes back and looks at ROMs that have been marked as "Unknown", and attempts to reprocess them. Only processing files that haven't been processed in the last 30 days.
-- **Signature Import**: Imports new DATs into the database. If you've already imported all of the available DATs you can safely disable this process.
-- **Title Import**: scans the `~/.gaseous-server/Data/Import` directory for new files to import. This service is safe to disable if you don't import files this way.
-- **Organise Library**: checks every file in the default library to ensure its path is correct, and moves it to where it needs to be. This is a housekeeping process that runs once a day to keep the default library tidy.
-- **Library Scan**: checks every file in every library to see if it's still present. Files that are present on the disk, but not in the database are imported, while files that in the database, but not present on disk are removed.
-- **Daily Maintenance**: cleans up temp directories, cleans up old logs. Only runs between 1am and 6am daily.
-- **Weekly Maintenance**: optimises the database. Only runs on Monday mornings between 1am and 6am.
-
-**Note**: all times above are in your servers local time.
+| Service | Function |
+| ------- | -------- |
+| Library Scan | Scans the library for new and missing ROMs, making the required changes to the database |
+| Metadata Refresh | Refreshes both signature and metadata data for all ROMs that have been loaded into Gaseous. It runs periodically to keep the signature and metadata data up to date. When run manually, a full refresh is forced for all ROMs. |
+| Organise Library | Checks all files in the default library to ensure that their paths are correct, moving files as required. |
+| Signature Import | Scans the signatures directory for new DATs. Not required when using Hasheous as the signature source. |
+| Temporary Directory Cleanup | Monitors Gaseous temporary directories for old unused files and cleans them up. |
+| Title Import | Scans the ROM import directory `~/.gaseous-server/Data/Import` for new ROMs to import. |
+| Daily Maintenance | Cleans up temp directories, cleans up old logs. Only runs between 1am and 6am daily. |
+| Weekly Maintenance | Optimises the database. Only runs on Monday mornings between 1am and 6am. |

@@ -23,6 +23,3 @@ Click the Create Media Group button. The server will begin building the media gr
 ![IMG_0080](/src/assets/images/IMG_0080.jpg)
 
 Click the Launch button next to the media group to start the emulator with the newly created media group.
-
-
-

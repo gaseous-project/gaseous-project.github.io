@@ -112,12 +112,12 @@ volumes:
 #### Build and deploy from source
 
 1. Install and configure a MariaDB or MySQL instance - this is beyond the scope of this document
-2. Install the dotnet 7.0 packages appropriate for your operating system
+2. Install the dotnet packages appropriate for your operating system
     * See: https://learn.microsoft.com/en-us/dotnet/core/install/linux
 3. Create a database user with permission to create a databse. Gaseous will create the new database and apply the database schema on it's first startup.
 4. Clone the repo with ```git clone https://github.com/gaseous-project/gaseous-server.git```
 5. Change into the gaseous-server directory
-6. As the main branch is the development branch, you might want to change to a stable version - these are tagged with a version number. For example to change to the 1.5.0 release, use the command ```git checkout v1.5.0```
+6. As the main branch is the development branch, you might want to change to a stable version - these are tagged with a version number. For example to change to the 2.0.0 release, use the command ```git checkout v2.0.0```
     * Check the releases page for the version you would like to run: https://github.com/gaseous-project/gaseous-server/releases
 7. Download the emulator files from ```https://cdn.emulatorjs.org/releases/4.0.9.zip``` and extract the files to ```gaseous-server/wwwroot/emulators/EmulatorJS```
 8. Create a directory in the home directory of the user that will run the server. For example, if running as the user ```gaseous```, create the directory ```/home/gaseous/.gaseous-server```

@@ -9,11 +9,11 @@ sidebar:
 
 Metadata provides cover art, screenshots, etc for your ROMs.
 
-Metadata is currently only supplied by IGDB, but more will be added in the future.
+Metadata can be supplied by IGDB and TheGamesDB; with more to be added in the future.
 
 See [](/v2/technical/rom-metadata-matching) for information how a ROM is matched to metadata.
 
-# IGDB
+## IGDB
 1. Sign Up with Twitch for a free account
 2. Ensure you have Two Factor Authentication enabled
 3. Register your application in the Twitch Developer Portal
@@ -30,3 +30,6 @@ See [](/v2/technical/rom-metadata-matching) for information how a ROM is matched
 There are two config.json options:
 * ``igdbclientid`` should equal the above client ID
 * ``igdbclientsecret`` should equal the above client secret
+
+## TheGamesDB
+This source has no configuration options, but requires Hasheous to be enabled.
